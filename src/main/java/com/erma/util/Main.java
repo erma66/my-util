@@ -1,6 +1,6 @@
-package com.erma;
+package com.erma.util;
 
-import com.erma.util.AsyncTaskUtils;
+import com.erma.util.async.AsyncTaskUtils;
 
 import java.util.ArrayList;
 import java.util.List;

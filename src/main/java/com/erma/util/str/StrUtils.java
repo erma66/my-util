@@ -1,7 +1,17 @@
-package com.erma.util;
+package com.erma.util.str;
 
-public class StringUtil {
-    private StringUtil() {
+import org.springframework.util.StringUtils;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
+
+public class StrUtils {
+    private StrUtils() {
     }
 
     /**
@@ -51,7 +61,7 @@ public class StringUtil {
     }
 
     /**
-     * 某个字串在字符串中出现了几次
+     * 某个子串在字符串中出现了几次
      */
     public static int countSubString(String str, String subStr) {
         if (isEmpty(str) || isEmpty(subStr)) {
@@ -85,5 +95,32 @@ public class StringUtil {
         return count;
     }
 
+    public static String getRandomId(int length) {
+        length = Math.min(length, 32);
+        return UUID.randomUUID().toString().replace("-", "").substring(0, length);
+    }
 
+    public static String replaceSlash(String str) {
+        if (StringUtils.hasText(str)) {
+            return str.replace("\\\"", "\"");
+        }
+        return str;
+    }
+
+    public static String readStream(InputStream inputStream, Charset cs) throws IOException {
+        if (cs == null) {
+            cs = StandardCharsets.UTF_8;
+        }
+        StringBuilder sb = new StringBuilder();
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, cs));
+            String l;
+            while ((l = reader.readLine()) != null) {
+                sb.append(l);
+            }
+        } finally {
+            inputStream.close();
+        }
+        return sb.toString();
+    }
 }

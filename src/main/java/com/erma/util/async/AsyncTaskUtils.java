@@ -1,4 +1,4 @@
-package com.erma.util;
+package com.erma.util.async;
 
 import java.util.concurrent.*;
 import java.util.function.Consumer;
@@ -12,7 +12,7 @@ public class AsyncTaskUtils {
 
     private static final Executor EXECUTOR =
             new ThreadPoolExecutor(
-                    0,
+                    2,
                     Math.max(Runtime.getRuntime().availableProcessors(), 10),
                     60L,
                     TimeUnit.SECONDS,
