@@ -139,7 +139,7 @@ public class HttpAsyncExecutor {
         if (CollectionUtils.isEmpty(headers)) {
             return;
         }
-        for (var entry : headers.entrySet()) {
+        for (Map.Entry<String, String> entry : headers.entrySet()) {
             httpMessage.addHeader(entry.getKey(), entry.getValue());
         }
     }

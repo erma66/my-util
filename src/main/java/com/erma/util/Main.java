@@ -1,6 +1,7 @@
 package com.erma.util;
 
 import com.erma.util.async.AsyncTaskUtils;
+import com.erma.util.bit.BitStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,23 @@ public class Main {
     public static void main(String[] args) {
         // write your code here
 
-        batchTest();
+//        batchTest();
+        testBit();
+    }
+
+    private static void testBit() {
+        BitStore bitStore = new BitStore(100);
+        System.out.println(bitStore.get(99));
+        bitStore.setOne(99);
+        System.out.println(bitStore.get(99));
+        bitStore.setZero(99);
+        System.out.println(bitStore.get(99));
+        bitStore.setOne(64);
+        System.out.println(bitStore.get(64));
+        bitStore.setZero(64);
+        System.out.println(bitStore.get(64));
+        System.out.println(bitStore.get(100));
+        System.out.println(bitStore.get(101));
     }
 
     private static void batchTest() {
