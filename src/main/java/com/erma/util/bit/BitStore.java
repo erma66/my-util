@@ -10,7 +10,7 @@ public class BitStore {
     private final long[] value;
 
     public BitStore(long length) {
-        long size = length % 64 == 0 ? length >> 6 : (length >> 6) + 1;
+        long size = (length + 63) >>> 6;
         if (size > Integer.MAX_VALUE) {
             throw new IllegalArgumentException("The length must be less than " + Integer.MAX_VALUE * 64L);
         }
