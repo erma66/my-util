@@ -20,11 +20,8 @@ import org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor;
 import org.apache.http.impl.nio.reactor.IOReactorConfig;
 import org.apache.http.nio.reactor.ConnectingIOReactor;
 import org.apache.http.nio.reactor.IOReactorException;
-import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -36,7 +33,7 @@ import java.util.concurrent.ThreadFactory;
  * @Created by erma66
  */
 @Slf4j
-public class HttpAsyncExecutor {
+public class HttpAsyncExecutor implements HttpExecutor<Future<HttpResponse>> {
     private CloseableHttpAsyncClient asyncClient;
 
     public HttpAsyncExecutor() {
@@ -79,6 +76,7 @@ public class HttpAsyncExecutor {
         asyncClient.start();
     }
 
+    @Override
     public Future<HttpResponse> doGet(String url, Map<String, String> headers, HttpCallback callback) {
         HttpGet httpGet = new HttpGet(url);
         addHeaders(httpGet, headers);
@@ -114,6 +112,7 @@ public class HttpAsyncExecutor {
         }
     }
 
+    @Override
     public Future<HttpResponse> doPost(String url, Map<String, String> headers, String data, HttpCallback callback) {
         HttpPost httpPost = new HttpPost(url);
         addHeaders(httpPost, headers);
@@ -146,8 +145,8 @@ public class HttpAsyncExecutor {
         }
     }
 
-    @PreDestroy
-    private void onDestroy() {
+    @Override
+    public void destroy() {
         if (asyncClient != null) {
             try {
                 asyncClient.close();
@@ -156,5 +155,4 @@ public class HttpAsyncExecutor {
             }
         }
     }
-
 }
