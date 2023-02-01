@@ -107,6 +107,13 @@ public class StrUtils {
         return str;
     }
 
+    /**
+     * 读取流到字符串
+     * @param inputStream
+     * @param cs
+     * @return
+     * @throws IOException
+     */
     public static String readStream(InputStream inputStream, Charset cs) throws IOException {
         if (cs == null) {
             cs = StandardCharsets.UTF_8;
@@ -122,5 +129,39 @@ public class StrUtils {
             inputStream.close();
         }
         return sb.toString();
+    }
+
+    /**
+     * sql转义
+     * @param src
+     * @return
+     */
+    public static String sqlEscape(String src) {
+        if (!StringUtils.hasText(src)) {
+            return src;
+        }
+        if (src.contains("%")) {
+            return src.replaceAll("%", "\\\\%");
+        }
+        if (src.contains("_")) {
+            return src.replaceAll("_", "\\\\_");
+        }
+        return src;
+    }
+
+    /**
+     *字符串拼接
+     * @param delimite
+     * @param strs
+     * @return
+     */
+    public static String join(String delimite, String... strs) {
+        StringBuilder sb = new StringBuilder();
+        for (String str : strs) {
+            if (StringUtils.hasText(str)) {
+                sb.append(str.trim()).append(delimite);
+            }
+        }
+        return sb.toString().trim();
     }
 }

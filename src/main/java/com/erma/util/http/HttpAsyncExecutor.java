@@ -35,12 +35,14 @@ import java.util.concurrent.ThreadFactory;
  * @Date 2022/8/3 18:27
  * @Created by erma66
  */
-@Service
 @Slf4j
 public class HttpAsyncExecutor {
     private CloseableHttpAsyncClient asyncClient;
 
-    @PostConstruct
+    public HttpAsyncExecutor() {
+        init();
+    }
+
     private void init() {
         RequestConfig requestConfig = RequestConfig.custom()
                 //连接超时,连接建立时间,三次握手完成时间
